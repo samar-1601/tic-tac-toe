@@ -1,19 +1,16 @@
 import "./style.css";
-import { useState } from "react";
-import { winner } from "./board";
+import { winner } from "./TicTacToe.js";
 
-export function Square({index, player, toggle}) {
-  const [value, setValue] = useState("");
-  const update = () => {
-    if(value==="" && !winner)
+export function Square({index, player, toggleButton}) {
+    const update = () => {
+    if(!winner)
     {
-        setValue(value => value = player);
-        toggle(index);
+        toggleButton(index);
     }
   };
   return (
-    <button value = {index} className="square" onClick = {()=>update()}>
-      {value}
+    <button id = {index} className="square" onClick = {()=>update()}>
+      {player}
     </button>
   );
 }
