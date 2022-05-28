@@ -9,8 +9,8 @@ export function Board({ toggle, squares, winners }) {
 
   const renderSquare = (i) => {
     if(winners && winners.includes(i))
-      return <Square winner ="winner" index={i} player={squares[i]} toggleButton={togglePlayer} />;
-    return <Square winner="" index={i} player={squares[i]} toggleButton={togglePlayer} />;
+      return <Square winners ="winner" index={i} player={squares[i]} toggleButton={togglePlayer} />;
+    return <Square winners="" index={i} player={squares[i]} toggleButton={togglePlayer} />;
   };
   let board = [];
   for(let i = 0; i<3; i++)

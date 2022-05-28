@@ -70,8 +70,11 @@ function TicTacToe() {
   const jumpTo = (step) => {
     console.log("step : " + step);
     console.log("stepNumber : " + stepNumber);
+    
     if(step===history.length-1)
       return;
+
+    
     stepNumber = step;
     // update the history to execute this jump
     updateHistory();
