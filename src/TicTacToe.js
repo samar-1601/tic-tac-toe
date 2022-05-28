@@ -70,7 +70,8 @@ function TicTacToe() {
   const jumpTo = (step) => {
     console.log("step : " + step);
     console.log("stepNumber : " + stepNumber);
-    
+    if(step===history.length-1)
+      return;
     stepNumber = step;
     // update the history to execute this jump
     updateHistory();
@@ -93,7 +94,7 @@ function TicTacToe() {
     const desc = move ? "Go to move #" + move + `(${step.row}, ${step.col})` : "Go to game start";
     return (
       <li key={move}>
-        <button className="history-button" onClick={() => jumpTo(move)}>
+        <button className="history-button" onClick={()=>jumpTo(move)}>
           {desc}
         </button>
       </li>

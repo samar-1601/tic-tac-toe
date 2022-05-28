@@ -12,24 +12,22 @@ export function Board({ toggle, squares, winners }) {
       return <Square winner ="winner" index={i} player={squares[i]} toggleButton={togglePlayer} />;
     return <Square winner="" index={i} player={squares[i]} toggleButton={togglePlayer} />;
   };
+  let board = [];
+  for(let i = 0; i<3; i++)
+  {
+    let boardRow = [];
+    for(let j = 0; j<3; j++)
+    {
+      let index = i*3 + j;
+      boardRow.push(renderSquare(index));
+    }
+    let boardRowElement = <div key={i} className="board-row">{boardRow}</div>
+    board.push(boardRowElement);
+  }
 
   return (
     <div className="board">
-      <div className="board-row">
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
-      </div>
-      <div className="board-row">
-        {renderSquare(3)}
-        {renderSquare(4)}
-        {renderSquare(5)}
-      </div>
-      <div className="board-row">
-        {renderSquare(6)}
-        {renderSquare(7)}
-        {renderSquare(8)}
-      </div>
+      {board}
     </div>
   );
 }
