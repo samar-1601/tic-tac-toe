@@ -108,8 +108,13 @@ function TicTacToe() {
     setAscending(!ascending);
   };
   
+  
   // Update the status of game
-  if (winner) {
+  if(!winner && moves.length===10)
+  {
+    status = "DRAW";
+  }
+  else if (winner) {
     status = "Winner: " + winner;
   } else {
     status = "Next player: " + player;
