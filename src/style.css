@@ -54,3 +54,6 @@ ul {
     grid-gap: 20px;
     margin: auto;
 }
+.winner{
+    background-color: rgb(140, 233, 97);
+}

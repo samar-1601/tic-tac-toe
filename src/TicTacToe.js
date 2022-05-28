@@ -4,8 +4,14 @@ import { CalculateWinner } from "./calculateWinner";
 import "./style.css";
 
 export let winner; // variable to store the winner 'X' or 'O'
+let winning_cells;
+let history = [{
+  squares: Array(9).fill(null),
+  row: "",
+  col: ""
+}];
 
-let history = []; // contains the history in terms of array of squre values at each step
+ // contains the history in terms of array of squre values at each step
 let stepNumber = 0; // counter for storing the steps taken in game
 let status; // stores status of the game
 
@@ -13,11 +19,11 @@ let status; // stores status of the game
 let squares = Array(9).fill("");
 
 // fill the history with empty values before the game starts
-history.push(squares);
 
 function TicTacToe() {
   // player state
   const [player, setPlayer] = useState("X");
+  const [ascending, setAscending] = useState(1);
   // grid state stored in squareValues
   const [squareValues, setSquareValues] = useState(squares);
 
@@ -26,7 +32,7 @@ function TicTacToe() {
     history = history.slice(0, stepNumber + 1);
     // store the last game stage(i.e the current) in the squares array
     const current = history[history.length - 1];
-    squares = current.slice();
+    squares = current.squares.slice();
   };
 
   // Function to Toggle the player and update the related variables
@@ -37,14 +43,20 @@ function TicTacToe() {
     squares[index] = player;
 
     // update the history list
-    history.push(squares);
+    history = history.concat(
+      [{
+        squares : squares,
+        row : Math.floor(Number(index) / 3),
+        col: Number(index) % 3,
+      }]
+    );
 
     // No. of steps taken in game is updated
     stepNumber = history.length;
 
     // Check for a winner
-    winner = CalculateWinner(squares);
-
+    [winner, winning_cells] = CalculateWinner(squares);
+    
     // update the square-list for the latest grid
     setSquareValues(squares);
     
@@ -58,7 +70,6 @@ function TicTacToe() {
   const jumpTo = (step) => {
     console.log("step : " + step);
     console.log("stepNumber : " + stepNumber);
-    if (stepNumber === step+1) return;
     
     stepNumber = step;
     // update the history to execute this jump
@@ -66,6 +77,7 @@ function TicTacToe() {
 
     // whenever we go to a previous game stage, the winner is again null.
     winner = "";
+    winning_cells ="";
     setSquareValues(squares);
 
     if (stepNumber%2===0) setPlayer("X");
@@ -78,7 +90,7 @@ function TicTacToe() {
   // Update the moves list according to the history
   const moves = history.map((step, move) => {
     // decide the text for the status
-    const desc = move !== "" ? "Go to move #" + move : "Go to game start";
+    const desc = move ? "Go to move #" + move + `(${step.row}, ${step.col})` : "Go to game start";
     return (
       <li key={move}>
         <button className="history-button" onClick={() => jumpTo(move)}>
@@ -88,6 +100,14 @@ function TicTacToe() {
     );
   });
 
+  
+  // changing the order of moves based on ascending or descending
+  if(!ascending) moves.reverse();
+  // toggling the ascending/ descending feature
+  const toggleAscending = ()=>{
+    setAscending(!ascending);
+  };
+  
   // Update the status of game
   if (winner) {
     status = "Winner: " + winner;
@@ -101,12 +121,12 @@ function TicTacToe() {
         <Board
           squares={squareValues}
           toggle={togglePlayer}
-          player={player}
-          winner={winner}
+          winners={winning_cells}
         />
       </div>
       <div className="game-info">
         <div>{status}</div>
+        <button onClick={()=> toggleAscending()}>{ascending?"Ascending":"Descending"}</button>
         <ol>{moves}</ol>
       </div>
     </div>

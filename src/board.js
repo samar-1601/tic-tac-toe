@@ -1,14 +1,18 @@
 import { Square } from "./square";
 import "./style.css";
 
-export function Board({ toggle, squares }) {
+export function Board({ toggle, squares, winners }) {
     const togglePlayer = (index) => {
       toggle(index);
     };
-    console.log("suuare recieved in board : " +  squares);
+    console.log("square recieved in board : " +  squares);
+
   const renderSquare = (i) => {
-    return <Square index={i} player={squares[i]} toggleButton={togglePlayer} />;
+    if(winners && winners.includes(i))
+      return <Square winner ="winner" index={i} player={squares[i]} toggleButton={togglePlayer} />;
+    return <Square winner="" index={i} player={squares[i]} toggleButton={togglePlayer} />;
   };
+
   return (
     <div className="board">
       <div className="board-row">
