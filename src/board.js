@@ -5,6 +5,7 @@ export function Board({ toggle, squares }) {
     const togglePlayer = (index) => {
       toggle(index);
     };
+    console.log("suuare recieved in board : " +  squares);
   const renderSquare = (i) => {
     return <Square index={i} player={squares[i]} toggleButton={togglePlayer} />;
   };

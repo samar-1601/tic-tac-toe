@@ -3,7 +3,8 @@ import { winner } from "./TicTacToe.js";
 
 export function Square({index, player, toggleButton}) {
     const update = () => {
-    if(!winner)
+    // if winner has been decided or this box was already checked, don't mark it again
+    if(player==="" &&  !winner)
     {
         toggleButton(index);
     }
